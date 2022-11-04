@@ -43,6 +43,12 @@ public class Program
                     stack.Pop();
                 }
 
+                //There was a missing condition, so condition for Matches being false is made
+
+                if (Matches(c, top) == false)
+                {
+                    return false;
+                }
                 // else, return false
                 else
                 {
