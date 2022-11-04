@@ -1,4 +1,6 @@
-﻿namespace Lab2;
+﻿using System.Data.SqlTypes;
+
+namespace Lab2;
 public class Program
 {
     public static void Main(string[] args)
@@ -12,10 +14,10 @@ public class Program
         Stack<char> stack = new Stack<char>();
 
         // iterate over all chars in string
-        foreach(var c in s)
+        foreach (var c in s)
         {
             // if char is an open thing, push it
-            if ( c=='<' || c=='(' || c == '{' || c == '[')
+            if (c == '<' || c == '(' || c == '{' || c == '[')
             {
                 stack.Push(c);
             }
@@ -29,21 +31,29 @@ public class Program
                 // handle result == false
 
                 // if they match, pop()
-                if (Matches(c, top) ) 
+                if (Matches(c, top))
                 {
+                    //looking for top in an empty stack will cause an error
+                    //make a conditional pertaining to this issue
+                    if (stack.Count == 0)
+                    {
+                        return false;
+                    }
+
                     stack.Pop();
                 }
+
                 // else, return false
                 else
                 {
                     return false;
                 }
             }
-            
+
         }
 
         // if stack is empty, return true
-        if( stack.Count ==0)
+        if (stack.Count == 0)
         {
             return true;
         }
@@ -54,7 +64,31 @@ public class Program
 
     private static bool Matches(char closing, char opening)
     {
-        throw new NotImplementedException();
+        if (closing == '}')
+        {
+            opening = '{';
+            return true;
+        }
+
+        else if (closing == ')')
+        {
+            opening = '(';
+            return true;
+        }
+
+        else if (closing == '>')
+        {
+            opening = '<';
+            return true;
+        }
+
+        else if (closing == ']')
+        {
+            closing = '[';
+            return true;
+        }
+
+        return false;
     }
 
 
